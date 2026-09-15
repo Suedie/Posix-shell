@@ -4,17 +4,11 @@
 #include <stdio.h>
 #include <string.h>
 
-int main (int argc, char **argv) {
-
-
-    return EXIT_SUCCESS;
-}
-
 #define  LSH_RL_BUFSIZE 1024
 char *lsh_read_line(void) {
     int bufsize = LSH_RL_BUFSIZE;
     int position = 0;
-    char *buffer = mallooc(sizeof(char) * bufsize);
+    char *buffer = malloc(sizeof(char) * bufsize);
     int c;
 
     if (!buffer) {
@@ -186,10 +180,21 @@ void lsh_loop(void) {
     do {
         printf("> ");
         line = lsh_read_line();
-        args = lsh_parse_args(line);
+        args = lsh_split_line(line);
         status = lsh_execute(args);
 
         free(line);
         free(args);
     } while (status);
+}
+
+int main (int argc, char **argv) {
+    // Load config files, if any.
+
+    // Run command loop.
+    lsh_loop();
+
+    // Perform any shutdown/cleanuo.
+    
+    return EXIT_SUCCESS;
 }
